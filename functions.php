@@ -108,3 +108,22 @@ function hitungRuanganTersedia(array $ruanganList): int
 
     return count($ruanganTersedia);
 }
+
+/**
+ * Mencari ruangan dengan harga sewa paling terjangkau
+ * Menggunakan fungsi bawaan array: usort()
+ *
+ * @param array $ruanganList Kumpulan data ruangan
+ * @return array|null Item ruangan termurah atau null jika kosong
+ */
+function cariRuanganTermurah(array $ruanganList): ?array
+{
+    if (empty($ruanganList)) {
+        return null;
+    }
+
+    $salinan = $ruanganList;
+    usort($salinan, fn(array $a, array $b): int => $a['harga'] <=> $b['harga']);
+
+    return $salinan[0] ?? null;
+}

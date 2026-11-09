@@ -123,5 +123,17 @@ $daftarRuangan = [
         'status'      => 'Tersedia',
         'deskripsi'   => 'Layanan alamat bisnis prestisius untuk legalitas usaha dan PKP tanpa harus menyewa ruang fisik sehari-hari.',
         'rating'      => 4.7
+    ],
+    [
+        'id'          => 10,
+        'nama'        => 'Quiet Focus Pod',
+        'kategori'    => 'Focus Booth',
+        'kapasitas'   => 1,
+        'harga'       => 30000,
+        'tipe_sewa'   => 'per jam',
+        'fasilitas'   => ['Bilik Kedap Suara 100%', 'Ventilasi Segar', 'Lampu Baca LED', 'USB Charger'],
+        'status'      => 'Tersedia',
+        'deskripsi'   => 'Bilik individual kedap suara untuk panggilan video privat atau menyelesaikan tugas penting tanpa gangguan.',
+        'rating'      => 4.6
     ]
 ];
