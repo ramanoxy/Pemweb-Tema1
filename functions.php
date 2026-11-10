@@ -3,20 +3,6 @@
 declare(strict_types=1);
 
 /**
- * ==============================================================================
- * FUNGSI BANTU & LOGIKA PEMROGRAMAN SISI SERVER
- * ==============================================================================
- * File ini berisi kumpulan fungsi buatan sendiri untuk aplikasi SpaceHub.
- * Dibuat sederhana dan ramah bagi pemula sesuai ketentuan teknis UTS:
- * 1. Setiap file PHP diawali declare(strict_types=1);
- * 2. Fungsi buatan sendiri memiliki tipe parameter dan return type yang jelas.
- * 3. Memanfaatkan fungsi array bawaan PHP (count, array_column, array_sum, array_filter, usort).
- * 4. Fungsi e() untuk perlindungan keamanan XSS dengan htmlspecialchars.
- * 5. Percabangan match expression untuk menentukan badge status dan warna.
- * ==============================================================================
- */
-
-/**
  * Mengamankan cetakan teks HTML dari risiko serangan Cross-Site Scripting (XSS)
  *
  * @param string|int|float|null $nilai Data yang akan dicetak ke HTML

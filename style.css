@@ -1,17 +1,3 @@
-/**
- * ==============================================================================
- * STYLE CSS UTAMA - SPACEHUB COWORKING & OFFICE
- * ==============================================================================
- * Dibuat murni dengan CSS modern tanpa framework sesuai ketentuan UTS.
- * Fitur:
- * - box-sizing: border-box global
- * - Tata letak terpusat (margin: 0 auto & flex/grid)
- * - Sistem variabel warna, padding, & border-radius konsisten
- * - Efek interaktif :hover pada tombol, navigasi, dan kartu
- * - Desain responsif mobile-friendly
- * ==============================================================================
- */
-
 /* 1. RESET & ATURAN GLOBAL */
 *,
 *::before,

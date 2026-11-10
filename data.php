@@ -2,19 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * ==============================================================================
- * DATA UTAMA RUANG KERJA (ARRAY MULTIDIMENSI)
- * ==============================================================================
- * File ini berisi master data untuk layanan persewaan ruang kerja SpaceHub.
- * Mengikuti ketentuan UTS:
- * - Menggunakan declare(strict_types=1);
- * - Array multidimensi (array yang berisi kumpulan array asosiatif)
- * - Berisi minimal 8 item (di sini tersedia 10 item)
- * - Setiap item memiliki minimal 4 atribut (di sini ada 10 atribut)
- * ==============================================================================
- */
-
 $daftarRuangan = [
     [
         'id'          => 1,

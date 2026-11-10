@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * ==============================================================================
- * HALAMAN PROFIL (INDEX.PHP) - SPACEHUB COWORKING
- * ==============================================================================
- * Menampilkan profil usaha ringkas, fasilitas utama, dan informasi kontak.
- * Didesain simpel, elegan, dan ramah pemula.
- * Struktur HTML5 semantik: header, nav, main, section, article, footer.
- * Heading teratur berurutan: h1 -> h2 -> h3.
- * ==============================================================================
- */
-
 require_once __DIR__ . '/data.php';
 require_once __DIR__ . '/functions.php';
 

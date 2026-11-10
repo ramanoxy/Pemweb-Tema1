@@ -2,19 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * ==============================================================================
- * HALAMAN KATALOG DINAMIS (KATALOG.PHP) - SPACEHUB COWORKING
- * ==============================================================================
- * Menampilkan daftar katalog ruang kerja secara dinamis dan bersih.
- * Fitur:
- * 1. Render data utama menggunakan perulangan foreach dari data.php
- * 2. Ringkasan hasil hitung matematis (count, array_sum, array_column, array_filter)
- * 3. Percabangan match untuk styling badge status ketersediaan
- * 4. Sanitasi seluruh output ke HTML dengan fungsi e() (htmlspecialchars)
- * ==============================================================================
- */
-
 require_once __DIR__ . '/data.php';
 require_once __DIR__ . '/functions.php';
 
