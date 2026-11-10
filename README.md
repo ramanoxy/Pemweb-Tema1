@@ -18,7 +18,70 @@ SpaceHub adalah platform katalog digital layanan penyewaan ruang kerja modern ya
 
 ---
 
-## 3. Cara Menjalankan di Localhost
+## 3. Alur Website (User Flow & Data Flow)
+
+Berikut adalah alur perjalanan pengguna (*user flow*) dan alur pemrosesan data sisi server (*server-side data flow*) pada aplikasi SpaceHub:
+
+### A. Diagram Alur Navigasi Pengguna (User Flow)
+```text
+                  ┌───────────────────────────────┐
+                  │    Pengunjung Membuka Web     │
+                  │     (http://localhost:8000)   │
+                  └──────────────┬────────────────┘
+                                 │
+                                 ▼
+                  ┌───────────────────────────────┐
+                  │   Halaman Profil (index.php)  │
+                  ├───────────────────────────────┤
+                  │ • Hero banner perkenalan      │
+                  │ • Ringkasan statistik server  │
+                  │ • Profil & informasi kontak   │
+                  │ • 3 Fasilitas utama           │
+                  └──────────────┬────────────────┘
+                                 │
+                   Klik Menu Navigasi / Tombol CTA
+                                 │
+                                 ▼
+                  ┌───────────────────────────────┐
+                  │  Halaman Katalog (katalog.php)│
+                  ├───────────────────────────────┤
+                  │ • 4 Kartu ringkasan hitung    │
+                  │ • Render kartu item (foreach) │
+                  │ • Badge status dinamis (match)│
+                  │ • Tombol pesan via WhatsApp   │
+                  └──────────────┬────────────────┘
+                                 │
+                    Klik Menu "Profil Usaha"
+                                 │
+                                 └──────────────► Kembali ke index.php
+```
+
+### B. Tahapan Alur Pengguna:
+1. **Akses Halaman Utama (`index.php`)**: Pengunjung disambut dengan hero banner yang memuat moto layanan SpaceHub serta kartu ringkasan cepat (total ruang, daya tampung, harga sewa terendah) yang dihitung secara dinamis oleh server PHP.
+2. **Eksplorasi Profil & Kontak**: Pengunjung membaca komitmen usaha, jam operasional layanan, fasilitas utama (internet fiber, kopi gratis, akses 24/7), serta kontak WhatsApp.
+3. **Pindah ke Katalog (`katalog.php`)**: Pengunjung menekan tombol *"Buka Katalog Ruangan"* untuk melihat seluruh opsi ruang kerja.
+4. **Melihat Ringkasan Statistik Data**: Pada bagian atas katalog, server menampilkan 4 kartu kalkulasi data riil: Total Unit Ruangan (`count`), Ruangan Siap Pakai (`array_filter`), Total Daya Tampung Orang (`array_sum`), dan Rata-Rata Harga Sewa.
+5. **Menelusuri Kartu Ruangan (Render Foreach)**: Setiap ruangan ditampilkan dalam kartu (*card-only*) yang memuat kategori, nama, badge ketersediaan (`match()`), kapasitas, rating, deskripsi, daftar fasilitas, dan harga.
+6. **Interaksi Pemesanan**: 
+   - Ruangan berstatus **Tersedia** menyediakan tombol *"Pesan Sekarang"* yang langsung membuka tautan WhatsApp dengan pesan otomatis membawa nama ruangan.
+   - Ruangan berstatus **Penuh / Dipesan** menyediakan tombol *"Tanya Jadwal"* untuk konsultasi antrean jadwal sewa berikutnya.
+
+### C. Alur Pemrosesan Data Sisi Server (Server-Side Architecture):
+```text
+ [data.php] ───────► Menyediakan master array multidimensi ($daftarRuangan).
+      │
+      ├────────────► [functions.php] 
+      │                   ├── Memproses data dengan fungsi array bawaan (count, sum, filter, usort)
+      │                   ├── Menentukan warna badge dengan percabangan match()
+      │                   └── Mengamankan seluruh cetakan output dengan fungsi e() (htmlspecialchars)
+      │
+      ▼
+ [index.php & katalog.php] ───► Merender tampilan HTML5 semantik bersih & dikirim ke peramban.
+```
+
+---
+
+## 4. Cara Menjalankan di Localhost
 
 Aplikasi ini tidak membutuhkan database (semua data tersimpan dalam array PHP) dan tidak menggunakan framework apa pun.
 
@@ -48,7 +111,7 @@ Aplikasi ini tidak membutuhkan database (semua data tersimpan dalam array PHP) d
 
 ---
 
-## 4. Daftar Fitur & Penanggung Jawab File/Fungsi
+## 5. Daftar Fitur & Penanggung Jawab File/Fungsi
 
 | No | Fitur Utama | File Terkait | Fungsi / Logika Penangan | Keterangan |
 |:--:|:---|:---|:---|:---|
@@ -59,10 +122,11 @@ Aplikasi ini tidak membutuhkan database (semua data tersimpan dalam array PHP) d
 | 5 | **Hitung Ruangan Siap Pakai** | `functions.php`, `index.php`, `katalog.php` | `hitungRuanganTersedia()` | Menyaring data array dengan `array_filter()` untuk menghitung ruangan yang saat ini berstatus 'Tersedia'. |
 | 6 | **Ringkasan Total Kapasitas** | `functions.php`, `index.php`, `katalog.php` | `hitungTotalKapasitas()` | Menghitung total daya tampung orang dari seluruh ruangan yang terdaftar. |
 | 7 | **Ringkasan Rata-Rata Harga** | `functions.php`, `katalog.php` | `hitungRataRataHarga()` | Menghitung nilai rata-rata harga sewa dari data yang sedang ditampilkan. |
+| 8 | **Pencarian Ruang Termurah** | `functions.php`, `index.php` | `cariRuanganTermurah()` | Mengurutkan dan mencari harga termurah menggunakan `usort()` sebagai referensi awal harga. |
 
 ---
 
-## 5. Daftar Fungsi Array Bawaan PHP yang Digunakan
+## 6. Daftar Fungsi Array Bawaan PHP yang Digunakan
 
 | No | Fungsi Bawaan Array | Letak File:Baris | Tujuan / Kegunaan dalam Proyek |
 |:--:|:---|:---|:---|
@@ -74,7 +138,7 @@ Aplikasi ini tidak membutuhkan database (semua data tersimpan dalam array PHP) d
 
 ---
 
-## 6. Tangkapan Layar Aplikasi
+## 7. Tangkapan Layar Aplikasi
 
 > Letakkan gambar tangkapan layar di dalam folder `screenshots/` dengan nama file `screenshot-profil.svg` dan `screenshot-katalog.svg`.
 
@@ -88,7 +152,7 @@ Aplikasi ini tidak membutuhkan database (semua data tersimpan dalam array PHP) d
 
 ---
 
-## 7. Sumber Referensi & Catatan Pemakaian AI
+## 8. Sumber Referensi & Catatan Pemakaian AI
 
 ### Sumber Referensi:
 1. Dokumentasi Resmi PHP: [https://www.php.net/manual/en/](https://www.php.net/manual/en/) (Referensi `strict_types`, `array_filter`, `array_column`, `array_sum`, `usort`, `match expression`).
@@ -96,7 +160,7 @@ Aplikasi ini tidak membutuhkan database (semua data tersimpan dalam array PHP) d
 3. Standar Penulisan Kode PHP PSR-12: [https://www.php-fig.org/psr/psr-12/](https://www.php-fig.org/psr/psr-12/).
 
 ### Catatan Pemakaian AI:
-- **Bagian yang dibantu**: AI digunakan untuk membantu merancang variasi data dummy yang realistis pada array multidimensi (`data.php`), ilustrasi visual SVG, serta penyusunan format dokumentasi README ini.
+- **Bagian yang dibantu**: AI digunakan untuk membantu merancang variasi data dummy yang realistis pada array multidimensi (`data.php`), ilustrasi visual SVG banner, serta penyusunan format dokumentasi README ini.
 - **Verifikasi Mandiri**: Seluruh logika PHP (`declare(strict_types=1);`, fungsi buatan sendiri bertipe, sanitasi `e()`, dan fungsi manipulasi array) telah diuji, dipahami, dan diverifikasi langsung melalui PHP 8.4 CLI untuk memastikan tidak ada *error*, *warning*, maupun *notice*. Mahasiswa memahami alur eksekusi baris per baris dan siap mendemokannya saat sesi ujian di hadapan dosen.
 
 ---
@@ -127,5 +191,5 @@ git commit -m "feat(render): integrasi render halaman profil simpel dan katalog 
 
 # Commit 5: Tahap 4 - Refaktor clean code dan kelengkapan dokumentasi
 git add screenshots/ README.md
-git commit -m "docs: lengkapi dokumentasi teknis, tangkapan layar, dan persiapan review kode"
+git commit -m "docs: lengkapi dokumentasi teknis, tangkapan layar, dan alur website lengkap"
 ```
